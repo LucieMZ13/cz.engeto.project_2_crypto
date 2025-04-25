@@ -23,8 +23,8 @@ public class CryptoController {
     }
 
     @GetMapping
-    public CryptoService getCryptos() {
-        return cryptoService;
+    public List<Crypto> getCryptos() {
+        return cryptoService.getCryptoList();
     }
 
     @GetMapping("/sort")
@@ -41,6 +41,6 @@ public class CryptoController {
         Optional<Crypto> crypto = cryptoService.getCryptoByID(id);
         return crypto.map(value -> ResponseEntity.ok(value.toString())).
                 orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).
-                body("ID " + id + " does not exist."));
+                        body("ID " + id + " does not exist."));
     }
 }

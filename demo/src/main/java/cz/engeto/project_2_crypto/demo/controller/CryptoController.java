@@ -35,12 +35,11 @@ public class CryptoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getDetailWithID(
+    public ResponseEntity<Crypto> getDetailWithID(
             @PathVariable int id
     ) {
         Optional<Crypto> crypto = cryptoService.getCryptoByID(id);
-        return crypto.map(value -> ResponseEntity.ok(value.toString())).
-                orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).
-                        body("ID " + id + " does not exist."));
+        return crypto.map(ResponseEntity::ok).orElseGet(
+                () -> ResponseEntity.notFound().build());
     }
 }

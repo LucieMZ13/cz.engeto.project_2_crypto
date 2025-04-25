@@ -23,15 +23,14 @@ public class CryptoController {
     }
 
     @GetMapping
-    public List<Crypto> getCryptos() {
-        return cryptoService.getCryptoList();
-    }
-
-    @GetMapping("/sort")
     public List<Crypto> sortByParam(
-            @RequestParam("sort") String sortingParam
-    ) {
+            @RequestParam(value = "sort", required = false) String sortingParam
+    ) { if (sortingParam != null) {
         return cryptoService.sortBy(sortingParam);
+    }
+        else {
+            return cryptoService.getCryptoList();
+        }
     }
 
     @GetMapping("/{id}")
